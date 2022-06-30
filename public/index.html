@@ -119,16 +119,18 @@
             articles.reverse();
             for (let i = 0; i < articles.length; i++) {
                 let article = articles[i];
+                let parser = new DOMParser();
+                let doc = parser.parseFromString(article.content, "text/html");
                 let postPreview = document.createElement('div');
                 postPreview.classList.add('post-preview');
                 let a = document.createElement('a');
-                a.href = `post.html?id=${i}`;
+                a.href = `post.html?id=${article.id}`;
                 let h2 = document.createElement('h2');
                 h2.classList.add('post-title');
                 h2.innerText = article.title;
                 let h3 = document.createElement('h3');
                 h3.classList.add('post-subtitle');
-                h3.innerText = article.content;
+                h3.innerText = doc.body.innerText.slice(0,90)+'...';
                 a.append(h2, h3);
                 let p = document.createElement('p');
                 p.classList.add('post-meta');
